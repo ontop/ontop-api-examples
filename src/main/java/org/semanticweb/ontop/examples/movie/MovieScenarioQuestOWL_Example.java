@@ -71,14 +71,12 @@ public class MovieScenarioQuestOWL_Example {
 
         factory.setPreferenceHolder(p);
 
-        QuestOWL reasoner = (QuestOWL) factory.createReasoner(ontology, new SimpleConfiguration());
 
-
-        // Now we are ready for querying
-        QuestOWLConnection conn = reasoner.getConnection();
-        QuestOWLStatement st = conn.createStatement();
-
-        try {
+        try (QuestOWL reasoner = factory.createReasoner(ontology, new SimpleConfiguration());
+             // Now we are ready for querying
+             QuestOWLConnection conn = reasoner.getConnection();
+             QuestOWLStatement st = conn.createStatement();
+        ) {
             QueryController qc = new QueryController();
             QueryIOManager qman = new QueryIOManager(qc);
             qman.load("src/main/resources/example/movie/movieontology.q");
@@ -104,8 +102,8 @@ public class MovieScenarioQuestOWL_Example {
                     System.out.println("Elapsed time:  " + time + " ms");
 
                 /*
-			 * Print the query summary
-			 */
+                 * Print the query summary
+			    */
 
                     String sqlQuery = st.getUnfolding(query.getQuery());
 
@@ -120,20 +118,7 @@ public class MovieScenarioQuestOWL_Example {
                     System.out.println(sqlQuery);
                 }
             }
-        } finally {
-
-			/*
-			 * Close connection and resources
-			 */
-            if (st != null && !st.isClosed()) {
-                st.close();
-            }
-            if (!conn.isClosed()) {
-                conn.close();
-            }
-            reasoner.dispose();
         }
-
 
     }
 

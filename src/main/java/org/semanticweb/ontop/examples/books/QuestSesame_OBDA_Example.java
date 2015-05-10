@@ -75,22 +75,25 @@ public class QuestSesame_OBDA_Example {
 
         repo.initialize();
 
-        RepositoryConnection conn = repo.getConnection();
+        try (
+            RepositoryConnection conn = repo.getConnection()
+        ) {
+            // execute query
+            Query query = conn.prepareQuery(QueryLanguage.SPARQL, queryString);
 
-        // execute query
-        Query query = conn.prepareQuery(QueryLanguage.SPARQL, queryString);
+            TupleQuery tq = (TupleQuery) query;
 
-        TupleQuery tq = (TupleQuery) query;
+            TupleQueryResult result = tq.evaluate();
 
-        TupleQueryResult result = tq.evaluate();
-
-        while (result.hasNext()) {
-            for (Binding binding : result.next()) {
-                System.out.print(binding.getValue() + ", ");
+            while (result.hasNext()) {
+                for (Binding binding : result.next()) {
+                    System.out.print(binding.getValue() + ", ");
+                }
+                System.out.println();
             }
-            System.out.println();
         }
 
+        repo.shutDown();
     }
 
     private String loadSPARQL(String sparqlFile) throws IOException {

@@ -89,19 +89,20 @@ public class QuestOWL_OBDA_Example {
 		QuestOWLFactory factory = new QuestOWLFactory();
 		factory.setOBDAController(obdaModel);
 		factory.setPreferenceHolder(preference);
-		QuestOWL reasoner = (QuestOWL) factory.createReasoner(ontology, new SimpleConfiguration());
+
 
 		/*
 		 * Prepare the data connection for querying.
 		 */
-		QuestOWLConnection conn = reasoner.getConnection();
-		QuestOWLStatement st = conn.createStatement();
 
         String sparqlQuery = loadSPARQL(sparqlFile);
 
 
-        try {
-			QuestOWLResultSet rs = st.executeTuple(sparqlQuery);
+        try (QuestOWL reasoner = factory.createReasoner(ontology, new SimpleConfiguration());
+             QuestOWLConnection conn = reasoner.getConnection();
+             QuestOWLStatement st = conn.createStatement();
+             QuestOWLResultSet rs = st.executeTuple(sparqlQuery)
+        ){
 			int columnSize = rs.getColumnCount();
 			while (rs.nextRow()) {
 				for (int idx = 1; idx <= columnSize; idx++) {
@@ -128,22 +129,11 @@ public class QuestOWL_OBDA_Example {
 			System.out.println("=====================");
 			System.out.println(sqlQuery);
 			
-		} finally {
-			
-			/*
-			 * Close connection and resources
-			 */
-			if (st != null && !st.isClosed()) {
-				st.close();
-			}
-			if (!conn.isClosed()) {
-				conn.close();
-			}
-			reasoner.dispose();
 		}
 	}
 
-    private OBDAModel loadOBDA(String obdaFile) throws IOException, InvalidPredicateDeclarationException, InvalidMappingException {
+    private OBDAModel loadOBDA(String obdaFile)
+            throws IOException, InvalidPredicateDeclarationException, InvalidMappingException {
     /*
      * Load the OBDA model from an external .obda file
      */

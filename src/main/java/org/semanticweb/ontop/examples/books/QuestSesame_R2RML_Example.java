@@ -76,7 +76,6 @@ public class QuestSesame_R2RML_Example {
 
         OWLOntology owlOntology = loadOWLOntology(owlFile);
 
-
         QuestPreferences preferences = new QuestPreferences();
         preferences.setCurrentValueOf(QuestPreferences.ABOX_MODE, QuestConstants.VIRTUAL);
         preferences.setCurrentValueOf(QuestPreferences.DBNAME, "books");
@@ -89,34 +88,33 @@ public class QuestSesame_R2RML_Example {
         SesameVirtualRepo repo = new SesameVirtualRepo("test_repo", owlOntology, r2rmlModel, preferences);
 
         repo.initialize();
+        try (RepositoryConnection conn = repo.getConnection()
+        ) {
 
-        RepositoryConnection conn = repo.getConnection();
-
-
-        String queryString = loadSPARQL(sparqlFile);
-
-
-        System.out.println();
-        System.out.println("The input SPARQL query:");
-        System.out.println("=======================");
-        System.out.println(queryString);
-        System.out.println();
+            String queryString = loadSPARQL(sparqlFile);
 
 
-        // execute query
-        Query query = conn.prepareQuery(QueryLanguage.SPARQL, queryString);
-
-        TupleQuery tq = (TupleQuery) query;
-
-        TupleQueryResult result = tq.evaluate();
-
-        while (result.hasNext()) {
-            for (Binding binding : result.next()) {
-                System.out.print(binding.getValue() + ", ");
-            }
             System.out.println();
-        }
+            System.out.println("The input SPARQL query:");
+            System.out.println("=======================");
+            System.out.println(queryString);
+            System.out.println();
 
+
+            // execute query
+            Query query = conn.prepareQuery(QueryLanguage.SPARQL, queryString);
+
+            TupleQuery tq = (TupleQuery) query;
+
+            TupleQueryResult result = tq.evaluate();
+
+            while (result.hasNext()) {
+                for (Binding binding : result.next()) {
+                    System.out.print(binding.getValue() + ", ");
+                }
+                System.out.println();
+            }
+        }
     }
 
     private OWLOntology loadOWLOntology(String owlFile) throws OWLOntologyCreationException {

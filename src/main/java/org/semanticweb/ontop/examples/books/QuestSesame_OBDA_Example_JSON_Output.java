@@ -79,19 +79,21 @@ public class QuestSesame_OBDA_Example_JSON_Output {
 
         repo.initialize();
 
-        RepositoryConnection conn = repo.getConnection();
+        try(RepositoryConnection conn = repo.getConnection()){
+            // execute query
+            Query query = conn.prepareQuery(QueryLanguage.SPARQL, queryString);
 
-        // execute query
-        Query query = conn.prepareQuery(QueryLanguage.SPARQL, queryString);
+            TupleQuery tq = (TupleQuery) query;
 
-        TupleQuery tq = (TupleQuery) query;
+            // you can use a FileOutputStream if you want to output to a file
+            OutputStream out = System.out;
+            TupleQueryResultHandler writer = new SPARQLResultsJSONWriter(out);
 
-        // you can use a FileOutputStream if you want to output to a file
-        OutputStream out = System.out;
-        TupleQueryResultHandler writer = new SPARQLResultsJSONWriter(out);
+            // execute the query and write the result directly to file
+            tq.evaluate(writer);
+        }
 
-        // execute the query and write the result directly to file
-        tq.evaluate(writer);
+        repo.shutDown();
 
     }
 

@@ -79,27 +79,16 @@ public class QuestOWL_R2RML_Example {
 
         factory.setOBDAController(obdaModel);
 
-        QuestOWL reasoner = (QuestOWL) factory.createReasoner(owlOntology, new SimpleConfiguration());
 
-		/*
-		 * Prepare the data connection for querying.
-		 */
-		QuestOWLConnection conn = reasoner.getConnection();
-		QuestOWLStatement st = conn.createStatement();
 
         String sparqlQuery = loadSPARQL(sparqlFile);
 
-        String sqlQuery = st.getUnfolding(sparqlQuery);
 
-        System.out.println();
-        System.out.println("The input SPARQL query:");
-        System.out.println("=======================");
-        System.out.println(sparqlQuery);
-        System.out.println();
-
-
-        try {
-			QuestOWLResultSet rs = st.executeTuple(sparqlQuery);
+        try (QuestOWL reasoner = factory.createReasoner(owlOntology, new SimpleConfiguration());
+             QuestOWLConnection conn = reasoner.getConnection();
+             QuestOWLStatement st = conn.createStatement();
+             QuestOWLResultSet rs = st.executeTuple(sparqlQuery);
+        ) {
 			int columnSize = rs.getColumnCount();
 			while (rs.nextRow()) {
 				for (int idx = 1; idx <= columnSize; idx++) {
@@ -108,28 +97,24 @@ public class QuestOWL_R2RML_Example {
 				}
 				System.out.print("\n");
 			}
-			rs.close();
 
 			/*
 			 * Print the query summary
 			 */
+            String sqlQuery = st.getUnfolding(sparqlQuery);
+
+            System.out.println();
+            System.out.println("The input SPARQL query:");
+            System.out.println("=======================");
+            System.out.println(sparqlQuery);
+            System.out.println();
 
 
-			System.out.println("The output SQL query:");
+
+            System.out.println("The output SQL query:");
 			System.out.println("=====================");
 			System.out.println(sqlQuery);
 			
-		} finally {
-			/*
-			 * Close connection and resources
-			 */
-			if (!st.isClosed()) {
-				st.close();
-			}
-			if (!conn.isClosed()) {
-				conn.close();
-			}
-			reasoner.dispose();
 		}
 	}
 
