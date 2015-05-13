@@ -49,7 +49,7 @@ public class MovieScenarioQuestSesame_Example {
 
         repo.initialize();
 
-        try(RepositoryConnection conn = repo.getConnection()) {
+        try (RepositoryConnection conn = repo.getConnection()) {
 
             // execute query
             Query query = conn.prepareQuery(QueryLanguage.SPARQL, queryString);

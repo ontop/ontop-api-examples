@@ -79,7 +79,7 @@ public class QuestSesame_OBDA_Example_JSON_Output {
 
         repo.initialize();
 
-        try(RepositoryConnection conn = repo.getConnection()){
+        try (RepositoryConnection conn = repo.getConnection()) {
             // execute query
             Query query = conn.prepareQuery(QueryLanguage.SPARQL, queryString);
 
