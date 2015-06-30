@@ -46,6 +46,20 @@
 
     </dependencies>
 
+    <repositories>
+        <repository>
+            <!-- for R2RML api -->
+            <id>bolzano-nexus-public</id>
+            <url>http://obdavm.inf.unibz.it:8080/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <build>
         <plugins>
             <plugin>
