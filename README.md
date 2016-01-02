@@ -5,7 +5,6 @@ This repository shows how to use ontop API as Maven libraries.
 
 ### Ontop as an OWLAPI library
 
-For instance, if you want to use the owlapi interface of Ontop, put the following in your pom.xml:
 
 ```xml
 <dependency>
@@ -16,7 +15,6 @@ For instance, if you want to use the owlapi interface of Ontop, put the followin
 ```
 ### Ontop as a Sesame library
 
-If you want to use the sesame API interface of Ontop, use the following:
 
 ```xml
 <dependency>
