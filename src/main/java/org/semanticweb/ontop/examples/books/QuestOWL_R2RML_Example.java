@@ -20,33 +20,27 @@ package org.semanticweb.ontop.examples.books;
  * #L%
  */
 
-import it.unibz.krdb.obda.model.OBDADataFactory;
-import it.unibz.krdb.obda.model.OBDADataSource;
 import it.unibz.krdb.obda.model.OBDAModel;
-import it.unibz.krdb.obda.model.impl.OBDADataFactoryImpl;
 import it.unibz.krdb.obda.owlrefplatform.core.QuestConstants;
 import it.unibz.krdb.obda.owlrefplatform.core.QuestPreferences;
-import it.unibz.krdb.obda.owlrefplatform.owlapi3.MappingFileLoader;
+import it.unibz.krdb.obda.owlrefplatform.owlapi3.MappingLoader;
 import it.unibz.krdb.obda.owlrefplatform.owlapi3.QuestOWL;
 import it.unibz.krdb.obda.owlrefplatform.owlapi3.QuestOWLConfiguration;
 import it.unibz.krdb.obda.owlrefplatform.owlapi3.QuestOWLConnection;
 import it.unibz.krdb.obda.owlrefplatform.owlapi3.QuestOWLFactory;
 import it.unibz.krdb.obda.owlrefplatform.owlapi3.QuestOWLResultSet;
 import it.unibz.krdb.obda.owlrefplatform.owlapi3.QuestOWLStatement;
-import it.unibz.krdb.obda.r2rml.R2RMLReader;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
-import org.semanticweb.owlapi.reasoner.SimpleConfiguration;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URI;
 
 public class QuestOWL_R2RML_Example {
 
@@ -73,7 +67,7 @@ public class QuestOWL_R2RML_Example {
         OWLOntology owlOntology = loadOWLOntology(owlFile);
 
 
-        OBDAModel obdaModel = new MappingFileLoader().loadR2RMLFile(r2rmlFile, jdbcUrl, username, password, driverClass);
+        OBDAModel obdaModel = new MappingLoader().loadRFrom2RMLFile(r2rmlFile, jdbcUrl, username, password, driverClass);
 
         QuestOWLFactory factory = new QuestOWLFactory();
 

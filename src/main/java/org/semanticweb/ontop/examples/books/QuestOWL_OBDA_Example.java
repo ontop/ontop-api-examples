@@ -22,7 +22,7 @@ package org.semanticweb.ontop.examples.books;
 
 import it.unibz.krdb.obda.model.OBDAModel;
 
-import it.unibz.krdb.obda.owlrefplatform.owlapi3.MappingFileLoader;
+import it.unibz.krdb.obda.owlrefplatform.owlapi3.MappingLoader;
 import it.unibz.krdb.obda.owlrefplatform.owlapi3.QuestOWL;
 import it.unibz.krdb.obda.owlrefplatform.owlapi3.QuestOWLConfiguration;
 import it.unibz.krdb.obda.owlrefplatform.owlapi3.QuestOWLConnection;
@@ -68,7 +68,7 @@ public class QuestOWL_OBDA_Example {
         OWLOntology ontology = OWLManager.createOWLOntologyManager()
                 .loadOntologyFromOntologyDocument(new File(owlFile));
 
-        OBDAModel obdaModel = new MappingFileLoader().loadOBDAFile(obdaFile);
+        OBDAModel obdaModel = new MappingLoader().loadFromOBDAFile(obdaFile);
 
 		/*
 		 * Create the instance of Quest OWL reasoner.
