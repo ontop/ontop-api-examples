@@ -20,39 +20,32 @@ package org.semanticweb.ontop.examples.books;
  * #L%
  */
 
-import it.unibz.krdb.obda.model.OBDADataFactory;
-import it.unibz.krdb.obda.model.OBDADataSource;
 import it.unibz.krdb.obda.model.OBDAModel;
-import it.unibz.krdb.obda.model.impl.OBDADataFactoryImpl;
 import it.unibz.krdb.obda.owlrefplatform.core.QuestConstants;
 import it.unibz.krdb.obda.owlrefplatform.core.QuestPreferences;
+import it.unibz.krdb.obda.owlrefplatform.owlapi3.MappingLoader;
 import it.unibz.krdb.obda.owlrefplatform.owlapi3.QuestOWL;
+import it.unibz.krdb.obda.owlrefplatform.owlapi3.QuestOWLConfiguration;
 import it.unibz.krdb.obda.owlrefplatform.owlapi3.QuestOWLConnection;
 import it.unibz.krdb.obda.owlrefplatform.owlapi3.QuestOWLFactory;
 import it.unibz.krdb.obda.owlrefplatform.owlapi3.QuestOWLResultSet;
 import it.unibz.krdb.obda.owlrefplatform.owlapi3.QuestOWLStatement;
-import it.unibz.krdb.obda.r2rml.R2RMLReader;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
-import org.semanticweb.owlapi.reasoner.SimpleConfiguration;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URI;
 
 public class QuestOWL_R2RML_Example {
 
     /*
-     * Use the sample database using H2 from
-     * https://github.com/ontop/ontop/wiki/InstallingTutorialDatabases
-     *
-     * Please use the pre-bundled H2 server from the above link
+     * Please use the pre-bundled H2 server from the root of this repository
      *
      */
     final String owlFile = "src/main/resources/example/books/exampleBooks.owl";
@@ -60,13 +53,18 @@ public class QuestOWL_R2RML_Example {
     final String sparqlFile = "src/main/resources/example/books/q1.rq";
 
 
+    final String jdbcUrl = "jdbc:h2:tcp://localhost/./books;DATABASE_TO_UPPER=FALSE";
+    final String username = "sa";
+    final String password = "test";
+    final String driverClass = "org.h2.Driver";
+
+
     public void runQuery() throws Exception {
 
         OWLOntology owlOntology = loadOWLOntology(owlFile);
 
 
-        OBDAModel obdaModel = loadR2RML(r2rmlFile);
-
+        OBDAModel obdaModel = new MappingLoader().loadRFrom2RMLFile(r2rmlFile, jdbcUrl, username, password, driverClass);
 
         QuestOWLFactory factory = new QuestOWLFactory();
 
@@ -75,15 +73,12 @@ public class QuestOWL_R2RML_Example {
         p.setCurrentValueOf(QuestPreferences.OBTAIN_FULL_METADATA,
                 QuestConstants.FALSE);
 
-        factory.setPreferenceHolder(p);
-
-        factory.setOBDAController(obdaModel);
-
+        QuestOWLConfiguration config = QuestOWLConfiguration.builder().obdaModel(obdaModel).preferences(p).build();
 
         String sparqlQuery = loadSPARQL(sparqlFile);
 
 
-        try (QuestOWL reasoner = factory.createReasoner(owlOntology, new SimpleConfiguration());
+        try (QuestOWL reasoner = factory.createReasoner(owlOntology, config);
              QuestOWLConnection conn = reasoner.getConnection();
              QuestOWLStatement st = conn.createStatement();
              QuestOWLResultSet rs = st.executeTuple(sparqlQuery);
@@ -115,26 +110,6 @@ public class QuestOWL_R2RML_Example {
 
         }
     }
-
-    private OBDAModel loadR2RML(String r2rmlFile) throws Exception {
-        String jdbcUrl = "jdbc:h2:tcp://localhost/books;DATABASE_TO_UPPER=FALSE";
-        String username = "sa";
-        String password = "";
-        String driverClass = "org.h2.Driver";
-
-        OBDADataFactory f = OBDADataFactoryImpl.getInstance();
-
-        URI obdaURI = new File(r2rmlFile).toURI();
-
-        String sourceUrl = obdaURI.toString();
-        OBDADataSource dataSource = f.getJDBCDataSource(sourceUrl, jdbcUrl,
-                username, password, driverClass);
-
-        R2RMLReader reader = new R2RMLReader(r2rmlFile);
-
-        return reader.readModel(dataSource);
-    }
-
 
     private OWLOntology loadOWLOntology(String owlFile) throws OWLOntologyCreationException {
         OWLOntologyManager owlManager = OWLManager.createOWLOntologyManager();

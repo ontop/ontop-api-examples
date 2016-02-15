@@ -3,21 +3,20 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>it.unibz.inf.ontop</groupId>
     <artifactId>ontop-api-examples</artifactId>
-    <version>1.16.1</version>
+    <version>1.17.0</version>
 
     <dependencies>
         <dependency>
             <groupId>it.unibz.inf.ontop</groupId>
-            <artifactId>ontop-quest-owlapi3</artifactId>
-            <version>1.16.1</version>
+            <artifactId>ontop-quest-owlapi</artifactId>
+            <version>1.17.0</version>
         </dependency>
 
         <dependency>
             <groupId>it.unibz.inf.ontop</groupId>
             <artifactId>ontop-quest-sesame</artifactId>
-            <version>1.16.1</version>
+            <version>1.17.0</version>
         </dependency>
-
 
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -65,8 +64,8 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>

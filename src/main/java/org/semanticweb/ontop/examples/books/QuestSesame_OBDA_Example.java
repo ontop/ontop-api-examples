@@ -35,10 +35,7 @@ import java.io.IOException;
 public class QuestSesame_OBDA_Example {
 
     /*
-     * Use the sample database using H2 from
-     * https://github.com/ontop/ontop/wiki/InstallingTutorialDatabases
-     *
-     * Please use the pre-bundled H2 server from the above link
+     * Please use the pre-bundled H2 server from the root of this repository
      *
      */
     final String owlFile = "src/main/resources/example/books/exampleBooks.owl";
