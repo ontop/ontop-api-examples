@@ -10,7 +10,7 @@ quest:		http://obda.org/quest#
 sourceUri	Books
 connectionUrl	jdbc:h2:tcp://localhost/./books;DATABASE_TO_UPPER=FALSE
 username	sa
-password	test
+password
 driverClass	org.h2.Driver
 
 [MappingDeclaration] @collection [[
