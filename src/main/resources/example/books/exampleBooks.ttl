@@ -30,7 +30,7 @@
 
 [ a                rr:TriplesMap ;
   rr:logicalTable  [ a            rr:R2RMLView ;
-                     rr:sqlQuery  "select \"ed_code\", \"pub_date\", \"n_edt\" from \"tb_edition\" where ed_type='S'"
+                     rr:sqlQuery  "select \"ed_code\", \"pub_date\", \"n_edt\" from \"tb_edition\" where \"ed_type\"='S'"
                    ] ;
   rr:subjectMap    [ a            rr:TermMap , rr:SubjectMap ;
                      rr:class     <http://meraka/moss/exampleBooks.owl#SpecialEdition> ;
