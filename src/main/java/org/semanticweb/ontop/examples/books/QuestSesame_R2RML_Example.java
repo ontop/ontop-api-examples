@@ -77,9 +77,9 @@ public class QuestSesame_R2RML_Example {
         preferences.setCurrentValueOf(QuestPreferences.ABOX_MODE, QuestConstants.VIRTUAL);
         preferences.setCurrentValueOf(QuestPreferences.DBNAME, "books");
         preferences.setCurrentValueOf(QuestPreferences.JDBC_DRIVER, "org.h2.Driver");
-        preferences.setCurrentValueOf(QuestPreferences.JDBC_URL, "jdbc:h2:tcp://localhost/books;DATABASE_TO_UPPER=FALSE");
+        preferences.setCurrentValueOf(QuestPreferences.JDBC_URL, "jdbc:h2:tcp://localhost/./books;DATABASE_TO_UPPER=FALSE");
         preferences.setCurrentValueOf(QuestPreferences.DBUSER, "sa");
-        preferences.setCurrentValueOf(QuestPreferences.DBPASSWORD, "");
+        preferences.setCurrentValueOf(QuestPreferences.DBPASSWORD, "test");
 
 
         SesameVirtualRepo repo = new SesameVirtualRepo("test_repo", owlOntology, r2rmlModel, preferences);
