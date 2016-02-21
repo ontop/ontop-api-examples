@@ -1,9 +1,9 @@
-ontop-examples
+ontop-api-examples
 ==============
 
 This repository shows how to use ontop API as Maven libraries.
 
-### Test database
+## Test database
 
 A sample h2 database is provided in the `h2` directory. To start it, just
 
@@ -17,6 +17,8 @@ A login window will popup. The login infos are:
 - Driver Class: `org.h2.Driver`
 - User Name: `sa`
 - Password: `test`
+
+## Ontop Maven artifacts
 
 ### Ontop as an OWLAPI library
 
@@ -37,31 +39,4 @@ A login window will popup. The login infos are:
 	<artifactId>ontop-quest-sesame</artifactId>
 	<version>1.17.0</version>
 </dependency>
-```
-
-### Ontop with R2RML
-
-If you need to use Ontop with R2RML, put the following dependency
-```xml
-<dependency>
-  <groupId>it.unibz.inf.ontop</groupId>
-  <artifactId>ontop-obdalib-r2rml</artifactId>
-  <version>1.17.0</version>
-</dependency>
-```
-and add the bolzano maven repo to your `pom.xml`
-```xml
-	<repositories>	
-		<repository>
-			<!-- for R2RML api -->
-			<id>bolzano-nexus-public</id>
-			<url>http://obdavm.inf.unibz.it:8080/nexus/content/groups/public/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
 ```
