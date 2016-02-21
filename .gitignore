@@ -28,3 +28,5 @@ tmp.*
 
 # Ontop specific
 plugin-runtime
+
+*.trace.db
