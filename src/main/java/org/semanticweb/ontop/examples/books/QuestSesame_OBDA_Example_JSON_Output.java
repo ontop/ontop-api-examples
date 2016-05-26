@@ -20,6 +20,8 @@ package org.semanticweb.ontop.examples.books;
  * #L%
  */
 
+import it.unibz.inf.ontop.sesame.RepositoryConnection;
+import it.unibz.inf.ontop.sesame.SesameVirtualRepo;
 import org.openrdf.query.Binding;
 import org.openrdf.query.Query;
 import org.openrdf.query.QueryLanguage;
@@ -27,8 +29,7 @@ import org.openrdf.query.TupleQuery;
 import org.openrdf.query.TupleQueryResult;
 import org.openrdf.query.TupleQueryResultHandler;
 import org.openrdf.query.resultio.sparqljson.SPARQLResultsJSONWriter;
-import sesameWrapper.RepositoryConnection;
-import sesameWrapper.SesameVirtualRepo;
+
 
 import java.io.BufferedReader;
 import java.io.FileReader;
