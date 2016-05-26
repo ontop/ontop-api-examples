@@ -27,7 +27,7 @@ A login window will popup. The login infos are:
 <dependency>
 	<groupId>it.unibz.inf.ontop</groupId>
 	<artifactId>ontop-quest-owlapi</artifactId>
-	<version>1.17.0</version>
+	<version>1.18.0</version>
 </dependency>
 ```
 ### Ontop as a Sesame library
@@ -37,6 +37,6 @@ A login window will popup. The login infos are:
 <dependency>
 	<groupId>it.unibz.inf.ontop</groupId>
 	<artifactId>ontop-quest-sesame</artifactId>
-	<version>1.17.0</version>
+	<version>1.18.0</version>
 </dependency>
 ```
