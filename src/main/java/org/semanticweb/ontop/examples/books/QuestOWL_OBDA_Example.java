@@ -28,6 +28,7 @@ import java.nio.file.Paths;
 import it.unibz.inf.ontop.model.OBDAModel;
 import it.unibz.inf.ontop.owlrefplatform.owlapi.*;
 import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.io.ToStringRenderer;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLOntology;
 
@@ -70,13 +71,10 @@ public class QuestOWL_OBDA_Example {
 
         QuestOWLConfiguration config = QuestOWLConfiguration.builder().obdaModel(obdaModel).build();
 
-
 		/*
 		 * Prepare the data connection for querying.
 		 */
         String sparqlQuery = Files.lines(Paths.get(sparqlFile)).collect(joining("\n"));
-
-
 
         try (QuestOWL reasoner = factory.createReasoner(ontology, config);
              QuestOWLConnection conn = reasoner.getConnection();
@@ -87,7 +85,7 @@ public class QuestOWL_OBDA_Example {
             while (rs.nextRow()) {
                 for (int idx = 1; idx <= columnSize; idx++) {
                     OWLObject binding = rs.getOWLObject(idx);
-                    System.out.print(binding.toString() + ", ");
+                    System.out.print(ToStringRenderer.getInstance().getRendering(binding) + ", ");
                 }
                 System.out.print("\n");
             }

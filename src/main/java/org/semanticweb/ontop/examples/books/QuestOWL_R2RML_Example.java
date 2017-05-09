@@ -27,6 +27,7 @@ import it.unibz.inf.ontop.owlrefplatform.core.QuestConstants;
 import it.unibz.inf.ontop.owlrefplatform.core.QuestPreferences;
 import it.unibz.inf.ontop.owlrefplatform.owlapi.*;
 import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.io.ToStringRenderer;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -82,7 +83,7 @@ public class QuestOWL_R2RML_Example {
             while (rs.nextRow()) {
                 for (int idx = 1; idx <= columnSize; idx++) {
                     OWLObject binding = rs.getOWLObject(idx);
-                    System.out.print(binding.toString() + ", ");
+                    System.out.print(ToStringRenderer.getInstance().getRendering(binding) + ", ");
                 }
                 System.out.print("\n");
             }

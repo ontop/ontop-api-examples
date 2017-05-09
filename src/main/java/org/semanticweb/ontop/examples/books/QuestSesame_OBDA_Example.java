@@ -69,7 +69,9 @@ public class QuestSesame_OBDA_Example {
         // create and initialize repo
         boolean existential = false;
         String rewriting = "TreeWitness";
-        SesameVirtualRepo repo = new SesameVirtualRepo("test_repo", owlFile, obdaFile, existential, rewriting);
+        //SesameVirtualRepo repo = new SesameVirtualRepo("test_repo", owlFile, obdaFile, existential, rewriting);
+
+        SesameVirtualRepo repo = new SesameVirtualRepo("test_repo", obdaFile, existential, rewriting);
 
         repo.initialize();
 
