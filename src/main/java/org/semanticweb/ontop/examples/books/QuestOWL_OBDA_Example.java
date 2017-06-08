@@ -79,22 +79,7 @@ public class QuestOWL_OBDA_Example {
         try (QuestOWL reasoner = factory.createReasoner(ontology, config);
              QuestOWLConnection conn = reasoner.getConnection();
              QuestOWLStatement st = conn.createStatement();
-             QuestOWLResultSet rs = st.executeTuple(sparqlQuery)
         ) {
-            int columnSize = rs.getColumnCount();
-            while (rs.nextRow()) {
-                for (int idx = 1; idx <= columnSize; idx++) {
-                    OWLObject binding = rs.getOWLObject(idx);
-                    System.out.print(ToStringRenderer.getInstance().getRendering(binding) + ", ");
-                }
-                System.out.print("\n");
-            }
-            rs.close();
-
-			/*
-			 * Print the query summary
-			 */
-
             String sqlQuery = st.getUnfolding(sparqlQuery);
 
             System.out.println();
@@ -106,6 +91,18 @@ public class QuestOWL_OBDA_Example {
             System.out.println("The output SQL query:");
             System.out.println("=====================");
             System.out.println(sqlQuery);
+
+            QuestOWLResultSet rs = st.executeTuple(sparqlQuery);
+
+            int columnSize = rs.getColumnCount();
+            while (rs.nextRow()) {
+                for (int idx = 1; idx <= columnSize; idx++) {
+                    OWLObject binding = rs.getOWLObject(idx);
+                    System.out.print(ToStringRenderer.getInstance().getRendering(binding) + ", ");
+                }
+                System.out.print("\n");
+            }
+            rs.close();
 
         }
     }
