@@ -30,3 +30,4 @@ tmp.*
 plugin-runtime
 
 *.trace.db
+*.log

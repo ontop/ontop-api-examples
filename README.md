@@ -7,7 +7,7 @@ This repository shows how to use ontop API as Maven libraries.
 
 A sample h2 database is provided in the `h2` directory. To start it, just
 
-```
+```bash
 $ cd h2
 $ ./h2.sh
 ```
@@ -20,23 +20,31 @@ A login window will popup. The login infos are:
 
 ## Ontop Maven artifacts
 
-### Ontop as an OWLAPI library
+### Ontop as an OWL-API library
 
 
-```xml
-<dependency>
-	<groupId>it.unibz.inf.ontop</groupId>
-	<artifactId>ontop-quest-owlapi</artifactId>
-	<version>1.18.0</version>
-</dependency>
+```xml        
+        <dependency>
+            <groupId>it.unibz.inf.ontop</groupId>
+            <artifactId>ontop-owlapi</artifactId>
+            <version>${ontop.version}</version>
+        </dependency>
 ```
-### Ontop as a Sesame library
+        
+```xml
+        <dependency>
+            <groupId>it.unibz.inf.ontop</groupId>
+            <artifactId>ontop-system-sql-owlapi</artifactId>
+            <version>${ontop.version}</version>
+        </dependency>
+```
+### Ontop as a RDF4J library
 
 
 ```xml
-<dependency>
-	<groupId>it.unibz.inf.ontop</groupId>
-	<artifactId>ontop-quest-sesame</artifactId>
-	<version>1.18.0</version>
-</dependency>
+        <dependency>
+            <groupId>it.unibz.inf.ontop</groupId>
+            <artifactId>ontop-rdf4j</artifactId>
+            <version>${ontop.version}</version>
+        </dependency>
 ```

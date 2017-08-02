@@ -141,7 +141,8 @@
   rr:predicateObjectMap  [ a             rr:PredicateObjectMap ;
                            rr:objectMap  [ a            rr:ObjectMap , rr:TermMap ;
                                            rr:column    "pub_date" ;
-                                           rr:termType  rr:Literal
+                                           rr:termType  rr:Literal ;
+                                           rr:datatype  xsd:dateTime
                                          ] ;
                            rr:predicate  <http://meraka/moss/exampleBooks.owl#dateOfPublication>
                          ] ;

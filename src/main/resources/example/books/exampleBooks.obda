@@ -4,14 +4,6 @@ owl:		http://www.w3.org/2002/07/owl#
 rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
 xsd:		http://www.w3.org/2001/XMLSchema#
 rdfs:		http://www.w3.org/2000/01/rdf-schema#
-quest:		http://obda.org/quest#
-
-[SourceDeclaration]
-sourceUri	Books
-connectionUrl	jdbc:h2:tcp://localhost/./books;DATABASE_TO_UPPER=FALSE
-username	sa
-password    test
-driverClass	org.h2.Driver
 
 [MappingDeclaration] @collection [[
 mappingId	cl_Authors
@@ -27,7 +19,7 @@ target		:editor/{ed_code}/ a :Editor ; :name {ed_name} .
 source		select "ed_code", "ed_name" from "tb_editor"
 
 mappingId	cl_Editions
-target		:edition/{ed_code}/ a :Edition ; :dateOfPublication {pub_date} ; :editionNumber {n_edt} .
+target		:edition/{ed_code}/ a :Edition ; :dateOfPublication {pub_date}^^xsd:dateTime ; :editionNumber {n_edt} .
 source		select "ed_code", "pub_date", "n_edt" from "tb_edition"
 
 mappingId	cl_AudioBook
