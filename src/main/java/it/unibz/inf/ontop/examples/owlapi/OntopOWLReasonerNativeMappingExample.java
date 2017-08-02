@@ -96,7 +96,7 @@ public class OntopOWLReasonerNativeMappingExample {
                 System.out.print("\n");
             }
 
-            // Only for debuggin purpose, not for end users: this will redo the query reformulation, which can be expensive
+            // Only for debugging purpose, not for end users: this will redo the query reformulation, which can be expensive
             final SQLExecutableQuery sqlExecutableQuery = (SQLExecutableQuery) st.getExecutableQuery(sparqlQuery);
             String sqlQuery = sqlExecutableQuery.getSQL();
 

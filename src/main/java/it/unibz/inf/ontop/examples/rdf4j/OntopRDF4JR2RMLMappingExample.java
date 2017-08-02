@@ -30,9 +30,10 @@ import org.eclipse.rdf4j.query.TupleQuery;
 import org.eclipse.rdf4j.query.TupleQueryResultHandlerException;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import static java.util.stream.Collectors.joining;
 
 public class OntopRDF4JR2RMLMappingExample {
 
@@ -54,12 +55,12 @@ public class OntopRDF4JR2RMLMappingExample {
     }
 
     private void run() throws Exception {
-        String queryString = loadSPARQL(sparqlFile);
+        String sparqlQuery = Files.lines(Paths.get(sparqlFile)).collect(joining("\n"));
 
         System.out.println();
         System.out.println("The input SPARQL query:");
         System.out.println("=======================");
-        System.out.println(queryString);
+        System.out.println(sparqlQuery);
         System.out.println();
 
         OntopSQLOWLAPIConfiguration configuration = OntopSQLOWLAPIConfiguration.defaultBuilder()
@@ -76,7 +77,7 @@ public class OntopRDF4JR2RMLMappingExample {
         try (
                 RepositoryConnection conn = repo.getConnection()
         ) {
-            final TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+            final TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, sparqlQuery);
 
             tupleQuery.evaluate(new AbstractTupleQueryResultHandler() {
                 @Override
@@ -108,17 +109,6 @@ public class OntopRDF4JR2RMLMappingExample {
         }
 
         repo.shutDown();
-    }
-
-    private String loadSPARQL(String sparqlFile) throws IOException {
-        StringBuilder queryString = new StringBuilder();
-
-        BufferedReader br = new BufferedReader(new FileReader(sparqlFile));
-        String line;
-        while ((line = br.readLine()) != null) {
-            queryString.append(line).append("\n");
-        }
-        return queryString.toString();
     }
 
 

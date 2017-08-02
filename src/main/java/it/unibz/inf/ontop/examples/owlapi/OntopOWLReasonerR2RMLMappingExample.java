@@ -84,14 +84,6 @@ public class OntopOWLReasonerR2RMLMappingExample {
              OntopOWLStatement st = conn.createStatement();
              TupleOWLResultSet rs = st.executeSelectQuery(sparqlQuery)
         ) {
-            // Not for end users: this will redo the query reformulation, which can be expensive
-            final SQLExecutableQuery sqlExecutableQuery = (SQLExecutableQuery) st.getExecutableQuery(sparqlQuery);
-            String sqlQuery = sqlExecutableQuery.getSQL();
-
-            System.out.println("The output SQL query:");
-            System.out.println("=====================");
-            System.out.println(sqlQuery);
-
             System.out.println(rs.getSignature().stream().collect(joining(",")));
             System.out.println("------------------------------------------------------------------------------------------");
 
@@ -103,6 +95,14 @@ public class OntopOWLReasonerR2RMLMappingExample {
                 }
                 System.out.print("\n");
             }
+
+            // Only for debugging purpose, not for end users: this will redo the query reformulation, which can be expensive
+            final SQLExecutableQuery sqlExecutableQuery = (SQLExecutableQuery) st.getExecutableQuery(sparqlQuery);
+            String sqlQuery = sqlExecutableQuery.getSQL();
+
+            System.out.println("The output SQL query:");
+            System.out.println("=====================");
+            System.out.println(sqlQuery);
         }
     }
 
