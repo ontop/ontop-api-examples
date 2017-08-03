@@ -20,8 +20,25 @@ A login window will popup. The login infos are:
 
 ## Ontop Maven artifacts
 
-### Ontop as an OWL-API library
+### Ontop as a RDF4J library (recommended)
 
+```xml
+        <dependency>
+            <groupId>it.unibz.inf.ontop</groupId>
+            <artifactId>ontop-rdf4j</artifactId>
+            <version>${ontop.version}</version>
+        </dependency>
+```
+
+```xml
+        <dependency>
+            <groupId>it.unibz.inf.ontop</groupId>
+            <artifactId>ontop-system-sql-owlapi</artifactId>
+            <version>${ontop.version}</version>
+        </dependency>
+```
+
+### Ontop as an OWL-API library
 
 ```xml        
         <dependency>
@@ -35,16 +52,6 @@ A login window will popup. The login infos are:
         <dependency>
             <groupId>it.unibz.inf.ontop</groupId>
             <artifactId>ontop-system-sql-owlapi</artifactId>
-            <version>${ontop.version}</version>
-        </dependency>
-```
-### Ontop as a RDF4J library
-
-
-```xml
-        <dependency>
-            <groupId>it.unibz.inf.ontop</groupId>
-            <artifactId>ontop-rdf4j</artifactId>
             <version>${ontop.version}</version>
         </dependency>
 ```
