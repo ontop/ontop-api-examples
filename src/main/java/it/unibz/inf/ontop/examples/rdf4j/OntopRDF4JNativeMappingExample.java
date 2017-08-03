@@ -24,13 +24,11 @@ package it.unibz.inf.ontop.examples.rdf4j;
 
 import it.unibz.inf.ontop.injection.OntopSQLOWLAPIConfiguration;
 import it.unibz.inf.ontop.rdf4j.repository.OntopRepository;
-import org.eclipse.rdf4j.query.AbstractTupleQueryResultHandler;
-import org.eclipse.rdf4j.query.BindingSet;
-import org.eclipse.rdf4j.query.QueryLanguage;
-import org.eclipse.rdf4j.query.TupleQuery;
-import org.eclipse.rdf4j.query.TupleQueryResultHandlerException;
+import org.eclipse.rdf4j.query.*;
+import org.eclipse.rdf4j.repository.Repository;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -55,7 +53,7 @@ public class OntopRDF4JNativeMappingExample {
         }
     }
 
-    public void run() throws Exception {
+    public void run() throws IOException {
         String sparqlQuery = Files.lines(Paths.get(sparqlFile)).collect(joining("\n"));
 
 
@@ -72,37 +70,18 @@ public class OntopRDF4JNativeMappingExample {
                 .enableTestMode()
                 .build();
 
-        OntopRepository repo = OntopRepository.defaultRepository(configuration);
-
+        Repository repo = OntopRepository.defaultRepository(configuration);
         repo.initialize();
 
         try (
-             RepositoryConnection conn = repo.getConnection()
+                RepositoryConnection conn = repo.getConnection() ;
+                TupleQueryResult result = conn.prepareTupleQuery(QueryLanguage.SPARQL, sparqlQuery)
+                        .evaluate()
         ) {
-            final TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, sparqlQuery);
-
-            tupleQuery.evaluate(new AbstractTupleQueryResultHandler() {
-                @Override
-                public void handleSolution(BindingSet bindingSet) throws TupleQueryResultHandlerException {
-                    System.out.println(bindingSet);
-                }
-            });
-
-
-            // execute query
-//            Query query = conn.prepareQuery(QueryLanguage.SPARQL, queryString);
-//
-//            TupleQuery tq = (TupleQuery) query;
-//
-//            TupleQueryResult result = tq.evaluate();
-//
-//            while (result.hasNext()) {
-//                final BindingSet bindingSet = result.next();
-//                for (Binding binding : bindingSet) {
-//                    System.out.print(binding.getValue() + ", ");
-//                }
-//                System.out.println();
-//            }
+            while (result.hasNext()) {
+                BindingSet bindingSet = result.next();
+                System.out.println(bindingSet);
+            }
         }
 
         repo.shutDown();
