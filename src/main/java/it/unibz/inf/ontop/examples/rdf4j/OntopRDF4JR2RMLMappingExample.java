@@ -23,6 +23,7 @@ package it.unibz.inf.ontop.examples.rdf4j;
 
 import it.unibz.inf.ontop.injection.OntopSQLOWLAPIConfiguration;
 import it.unibz.inf.ontop.rdf4j.repository.OntopRepository;
+import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.query.*;
 import org.eclipse.rdf4j.repository.Repository;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
@@ -38,6 +39,7 @@ public class OntopRDF4JR2RMLMappingExample {
     private static final String r2rmlFile = "src/main/resources/example/books/exampleBooks.ttl";
     private static final String propertyFile = "src/main/resources/example/books/exampleBooks.properties";
     private static final String sparqlFile = "src/main/resources/example/books/q1.rq";
+    private static final String constructFile = "src/main/resources/example/books/q2.rq";
 
     /**
      * Main client program
@@ -78,6 +80,29 @@ public class OntopRDF4JR2RMLMappingExample {
             while (result.hasNext()) {
                 BindingSet bindingSet = result.next();
                 System.out.println(bindingSet);
+            }
+        }
+
+        String sparqlConstructQuery = Files.lines(Paths.get(constructFile)).collect(joining("\n"));
+
+        System.out.println();
+        System.out.println("The input SPARQL construct query:");
+        System.out.println("=======================");
+        System.out.println(sparqlConstructQuery);
+        System.out.println();
+
+
+        try (
+                RepositoryConnection conn = repo.getConnection() ;
+                GraphQueryResult result = conn.prepareGraphQuery(QueryLanguage.SPARQL, sparqlConstructQuery)
+                        .evaluate()
+        ) {
+            while (result.hasNext()) {
+
+                Statement statement = result.next();
+                System.out.println(statement);
+
+                result.close();
             }
         }
 

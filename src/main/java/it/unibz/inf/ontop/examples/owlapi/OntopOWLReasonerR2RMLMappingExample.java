@@ -28,10 +28,12 @@ import it.unibz.inf.ontop.owlapi.OntopOWLFactory;
 import it.unibz.inf.ontop.owlapi.OntopOWLReasoner;
 import it.unibz.inf.ontop.owlapi.connection.OntopOWLConnection;
 import it.unibz.inf.ontop.owlapi.connection.OntopOWLStatement;
+import it.unibz.inf.ontop.owlapi.resultset.GraphOWLResultSet;
 import it.unibz.inf.ontop.owlapi.resultset.OWLBinding;
 import it.unibz.inf.ontop.owlapi.resultset.OWLBindingSet;
 import it.unibz.inf.ontop.owlapi.resultset.TupleOWLResultSet;
 import org.semanticweb.owlapi.io.ToStringRenderer;
+import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLException;
 import org.semanticweb.owlapi.model.OWLObject;
 
@@ -47,6 +49,7 @@ public class OntopOWLReasonerR2RMLMappingExample {
     private static final String r2rmlFile = "src/main/resources/example/books/exampleBooks.ttl";
     private static final String propertyFile = "src/main/resources/example/books/exampleBooks.properties";
     private static final String sparqlFile = "src/main/resources/example/books/q1.rq";
+    private static final String constructFile = "src/main/resources/example/books/q2.rq";
 
     /**
      * Main client program
@@ -104,7 +107,29 @@ public class OntopOWLReasonerR2RMLMappingExample {
             System.out.println("=====================");
             System.out.println(sqlQuery);
         }
+
+        String constructQuery = Files.lines(Paths.get(constructFile)).collect(joining("\n"));
+
+        System.out.println();
+        System.out.println("The input construct SPARQL query:");
+        System.out.println("=======================");
+        System.out.println(constructQuery);
+        System.out.println();
+
+        try (OntopOWLConnection conn = reasoner.getConnection();
+             OntopOWLStatement st = conn.createStatement();
+             GraphOWLResultSet rs = st.executeConstructQuery(constructQuery)
+        ) {
+            System.out.println("------------------------------------------------------------------------------------------");
+
+            while (rs.hasNext()) {
+                OWLAxiom owlAxiom = rs.next();
+
+                System.out.print(owlAxiom);
+            }
+        }
     }
+
 
 
 }

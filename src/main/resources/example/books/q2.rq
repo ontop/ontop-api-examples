@@ -1,0 +1,3 @@
+PREFIX : <http://meraka/moss/exampleBooks.owl#>
+CONSTRUCT {?s :title ?o. } WHERE {?s :title ?o . FILTER(?s = <http://meraka/moss/exampleBooks.owl#book/23/>)}
+
