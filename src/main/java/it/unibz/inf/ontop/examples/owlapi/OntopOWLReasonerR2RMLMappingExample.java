@@ -21,9 +21,9 @@ package it.unibz.inf.ontop.examples.owlapi;
  */
 
 
-import it.unibz.inf.ontop.answering.reformulation.impl.SQLExecutableQuery;
 import it.unibz.inf.ontop.injection.OntopSQLOWLAPIConfiguration;
 
+import it.unibz.inf.ontop.iq.IQ;
 import it.unibz.inf.ontop.owlapi.OntopOWLFactory;
 import it.unibz.inf.ontop.owlapi.OntopOWLReasoner;
 import it.unibz.inf.ontop.owlapi.connection.OntopOWLConnection;
@@ -100,8 +100,8 @@ public class OntopOWLReasonerR2RMLMappingExample {
             }
 
             // Only for debugging purpose, not for end users: this will redo the query reformulation, which can be expensive
-            final SQLExecutableQuery sqlExecutableQuery = (SQLExecutableQuery) st.getExecutableQuery(sparqlQuery);
-            String sqlQuery = sqlExecutableQuery.getSQL();
+            IQ executableQuery = st.getExecutableQuery(sparqlQuery);
+            String sqlQuery = executableQuery.toString();
 
             System.out.println("The output SQL query:");
             System.out.println("=====================");
