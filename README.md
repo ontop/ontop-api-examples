@@ -49,7 +49,7 @@ A login window will popup. The login infos are:
 
 ### Ontop as an OWL-API library
 
-```xml        
+```xml
         <dependency>
             <groupId>it.unibz.inf.ontop</groupId>
             <artifactId>ontop-owlapi</artifactId>
