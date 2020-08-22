@@ -9,7 +9,7 @@ NOTICE
 - We now recommend the usage of the [Docker image](https://hub.docker.com/repository/docker/ontop/ontop-endpoint), or as a second option, the [CLI](https://ontop-vkg.org/guide/cli.html#ontop-endpoint).
 - Ontop Java API is not intended to be used in production. We reserve ourselves the right to change dependencies and JVM versions for newer versions so please do not consider the  current requirements as stable.
 - The OWLAPI bindings should only be used by those interested in having access to
- some internals. Its querying interface is actually internal to us, so please consider
+ some internals. Its querying interface is actually specific to us, so please consider
   the RDF4J API for a more standard and stable interface.
 
 ## Test database
