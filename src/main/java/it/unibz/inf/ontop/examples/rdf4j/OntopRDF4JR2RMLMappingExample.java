@@ -70,7 +70,7 @@ public class OntopRDF4JR2RMLMappingExample {
                 .build();
 
         Repository repo = OntopRepository.defaultRepository(configuration);
-        repo.initialize();
+        repo.init();
 
         try (
                 RepositoryConnection conn = repo.getConnection() ;

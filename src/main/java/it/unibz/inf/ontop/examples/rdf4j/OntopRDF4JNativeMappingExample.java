@@ -73,7 +73,7 @@ public class OntopRDF4JNativeMappingExample {
                 .build();
 
         Repository repo = OntopRepository.defaultRepository(configuration);
-        repo.initialize();
+        repo.init();
 
         try (
                 RepositoryConnection conn = repo.getConnection() ;
