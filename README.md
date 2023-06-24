@@ -7,10 +7,6 @@ NOTICE
 -----
 
 - We now recommend the usage of the [Docker image](https://hub.docker.com/repository/docker/ontop/ontop-endpoint), or as a second option, the [CLI](https://ontop-vkg.org/guide/cli.html#ontop-endpoint).
-- Ontop Java API is not intended to be used in production. We reserve ourselves the right to change dependencies and JVM versions for newer versions so please do not consider the  current requirements as stable.
-- The OWLAPI bindings should only be used by those interested in having access to
- some internals in a controlled setting and who are ready to face some complications/caveats caused by the "owl-ification" of RDF. Its querying interface is actually specific to us, so please consider
-  the RDF4J API for a standard, intuitive and stable interface.
 
 ## Test database
 
@@ -24,12 +20,13 @@ A login window will popup. The login infos are:
 
 - Saved Settings: `Generic H2 (Server)`
 - Driver Class: `org.h2.Driver`
+- JDBC URL: `jdbc:h2:tcp://localhost/./books.h2`
 - User Name: `sa`
 - Password: `test`
 
 ## Ontop Maven artifacts
 
-### Ontop as a RDF4J library (recommended)
+### Ontop as a RDF4J library
 
 ```xml
         <dependency>
@@ -46,22 +43,3 @@ A login window will popup. The login infos are:
             <version>${ontop.version}</version>
         </dependency>
 ```
-
-### Ontop as an OWL-API library (not recommended)
-
-```xml
-        <dependency>
-            <groupId>it.unibz.inf.ontop</groupId>
-            <artifactId>ontop-owlapi</artifactId>
-            <version>${ontop.version}</version>
-        </dependency>
-```
-        
-```xml
-        <dependency>
-            <groupId>it.unibz.inf.ontop</groupId>
-            <artifactId>ontop-system-sql-owlapi</artifactId>
-            <version>${ontop.version}</version>
-        </dependency>
-```
-

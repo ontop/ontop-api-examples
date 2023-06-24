@@ -23,15 +23,17 @@ package it.unibz.inf.ontop.examples.rdf4j;
 
 import it.unibz.inf.ontop.injection.OntopSQLOWLAPIConfiguration;
 import it.unibz.inf.ontop.rdf4j.repository.OntopRepository;
+import it.unibz.inf.ontop.rdf4j.repository.OntopRepositoryConnection;
 import org.eclipse.rdf4j.model.Statement;
-import org.eclipse.rdf4j.query.*;
+import org.eclipse.rdf4j.query.BindingSet;
+import org.eclipse.rdf4j.query.GraphQueryResult;
+import org.eclipse.rdf4j.query.QueryLanguage;
+import org.eclipse.rdf4j.query.TupleQueryResult;
 import org.eclipse.rdf4j.repository.Repository;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
-import static java.util.stream.Collectors.joining;
 
 public class OntopRDF4JR2RMLMappingExample {
 
@@ -54,7 +56,7 @@ public class OntopRDF4JR2RMLMappingExample {
     }
 
     private void run() throws Exception {
-        String sparqlQuery = Files.lines(Paths.get(sparqlFile)).collect(joining("\n"));
+        String sparqlQuery = Files.readString(Paths.get(sparqlFile));
 
         System.out.println();
         System.out.println("The input SPARQL query:");
@@ -70,20 +72,27 @@ public class OntopRDF4JR2RMLMappingExample {
                 .build();
 
         Repository repo = OntopRepository.defaultRepository(configuration);
-        repo.initialize();
+        repo.init();
 
         try (
                 RepositoryConnection conn = repo.getConnection() ;
-                TupleQueryResult result = conn.prepareTupleQuery(QueryLanguage.SPARQL, sparqlQuery)
-                        .evaluate()
+                TupleQueryResult result = conn.prepareTupleQuery(QueryLanguage.SPARQL, sparqlQuery).evaluate()
         ) {
             while (result.hasNext()) {
                 BindingSet bindingSet = result.next();
                 System.out.println(bindingSet);
             }
+
+            // Only for debugging purpose, not for end users: this will redo the query reformulation, which can be expensive
+            String sqlQuery = ((OntopRepositoryConnection) conn).reformulate(sparqlQuery);
+            System.out.println();
+            System.out.println("The reformulated SQL query:");
+            System.out.println("=======================");
+            System.out.println(sqlQuery);
+            System.out.println();
         }
 
-        String sparqlConstructQuery = Files.lines(Paths.get(constructFile)).collect(joining("\n"));
+        String sparqlConstructQuery = Files.readString(Paths.get(constructFile));
 
         System.out.println();
         System.out.println("The input SPARQL construct query:");
@@ -94,14 +103,11 @@ public class OntopRDF4JR2RMLMappingExample {
 
         try (
                 RepositoryConnection conn = repo.getConnection() ;
-                GraphQueryResult result = conn.prepareGraphQuery(QueryLanguage.SPARQL, sparqlConstructQuery)
-                        .evaluate()
+                GraphQueryResult result = conn.prepareGraphQuery(QueryLanguage.SPARQL, sparqlConstructQuery).evaluate()
         ) {
             while (result.hasNext()) {
-
                 Statement statement = result.next();
                 System.out.println(statement);
-
                 result.close();
             }
         }
