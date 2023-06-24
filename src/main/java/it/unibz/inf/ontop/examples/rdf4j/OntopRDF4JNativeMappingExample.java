@@ -20,10 +20,9 @@ package it.unibz.inf.ontop.examples.rdf4j;
  * #L%
  */
 
-
-
 import it.unibz.inf.ontop.injection.OntopSQLOWLAPIConfiguration;
 import it.unibz.inf.ontop.rdf4j.repository.OntopRepository;
+import it.unibz.inf.ontop.rdf4j.repository.OntopRepositoryConnection;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.query.*;
 import org.eclipse.rdf4j.repository.Repository;
@@ -56,9 +55,7 @@ public class OntopRDF4JNativeMappingExample {
     }
 
     public void run() throws IOException {
-        String sparqlQuery = Files.lines(Paths.get(sparqlFile)).collect(joining("\n"));
-
-
+        String sparqlQuery = Files.readString(Paths.get(sparqlFile));
         System.out.println();
         System.out.println("The input SPARQL query:");
         System.out.println("=======================");
@@ -77,40 +74,42 @@ public class OntopRDF4JNativeMappingExample {
 
         try (
                 RepositoryConnection conn = repo.getConnection() ;
-                TupleQueryResult result = conn.prepareTupleQuery(QueryLanguage.SPARQL, sparqlQuery)
-                        .evaluate()
+                TupleQueryResult result = conn.prepareTupleQuery(QueryLanguage.SPARQL, sparqlQuery).evaluate()
         ) {
             while (result.hasNext()) {
                 BindingSet bindingSet = result.next();
                 System.out.println(bindingSet);
             }
-        }
 
-        String sparqlConstructQuery = Files.lines(Paths.get(constructFile)).collect(joining("\n"));
+            // Only for debugging purpose, not for end users: this will redo the query reformulation, which can be expensive
+            String sqlQuery = ((OntopRepositoryConnection) conn).reformulate(sparqlQuery);
+            System.out.println();
+            System.out.println("The reformulated SQL query:");
+            System.out.println("=======================");
+            System.out.println(sqlQuery);
+            System.out.println();
+        }
+        
+        String sparqlConstructQuery = Files.readString(Paths.get(constructFile));
 
         System.out.println();
         System.out.println("The input SPARQL construct query:");
         System.out.println("=======================");
         System.out.println(sparqlConstructQuery);
         System.out.println();
-
-
+        
         try (
                 RepositoryConnection conn = repo.getConnection() ;
-                GraphQueryResult result = conn.prepareGraphQuery(QueryLanguage.SPARQL, sparqlConstructQuery)
-                        .evaluate()
+                GraphQueryResult result = conn.prepareGraphQuery(QueryLanguage.SPARQL, sparqlConstructQuery).evaluate()
         ) {
             while (result.hasNext()) {
-
                 Statement statement = result.next();
                 System.out.println(statement);
-
                 result.close();
             }
         }
 
         repo.shutDown();
     }
-
 
 }
