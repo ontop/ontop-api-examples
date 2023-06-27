@@ -84,7 +84,8 @@ public class OntopRDF4JR2RMLMappingExample {
             }
 
             // Only for debugging purpose, not for end users: this will redo the query reformulation, which can be expensive
-            String sqlQuery = ((OntopRepositoryConnection) conn).reformulate(sparqlQuery);
+            //String sqlQuery = ((OntopRepositoryConnection) conn).reformulate(sparqlQuery);
+            String sqlQuery = ((OntopRepositoryConnection) conn).reformulateIntoNativeQuery(sparqlQuery);
             System.out.println();
             System.out.println("The reformulated SQL query:");
             System.out.println("=======================");
