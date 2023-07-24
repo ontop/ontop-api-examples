@@ -20,7 +20,7 @@ A login window will popup. The login infos are:
 
 - Saved Settings: `Generic H2 (Server)`
 - Driver Class: `org.h2.Driver`
-- JDBC URL: `jdbc:h2:tcp://localhost/./books.h2`
+- JDBC URL: `jdbc:h2:tcp://localhost/./books`
 - User Name: `sa`
 - Password: `test`
 
