@@ -4,10 +4,10 @@
     <groupId>it.unibz.inf.ontop</groupId>
     <artifactId>ontop-api-examples</artifactId>
 
-    <version>5.1.0</version>
+    <version>5.2.0</version>
 
     <properties>
-        <ontop.version>5.0.2</ontop.version>
+        <ontop.version>5.2.0</ontop.version>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <logback.version>1.2.9</logback.version>
         <h2.version>2.1.214</h2.version>
