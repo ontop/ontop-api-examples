@@ -106,7 +106,7 @@ public class OntopRDF4JNativeMappingExample {
             while (result.hasNext()) {
                 Statement statement = result.next();
                 System.out.println(statement);
-                result.close();
+                //result.close();
             }
         }
 

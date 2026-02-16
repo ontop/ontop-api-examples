@@ -109,7 +109,6 @@ public class OntopRDF4JR2RMLMappingExample {
             while (result.hasNext()) {
                 Statement statement = result.next();
                 System.out.println(statement);
-                result.close();
             }
         }
 
